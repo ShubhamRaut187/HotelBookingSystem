@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <h1>Login Account</h1>
+    <p>Please Enter Dummy Details:john@mail.com, password:changeme</p>
+    <div id="login_main">
+        <form class="login_form" onsubmit="authenticateuser()">
+            <input type="email" placeholder="Email" id="login_uername_input">
+            <input type="password" placeholder="Password" id="login_password_input">
+            <input type="submit"  id="login_submit_btn">
+        </form>
+    </div>
+</body>
+</html>
+<script>
+    let authenticateuser = ()=>{
+        event.preventDefault();
+        let username = document.querySelector('#login_uername_input').value;
+        let password = document.querySelector('#login_password_input').value;
+        console.log(username);
+        fetch(`https://api.escuelajs.co/api/v1/auth/login`,{
+            method:'POST',
+            body:JSON.stringify({
+                email:username,
+                password:password
+            }),
+            headers:{
+                "Content-Type":"application/json"
+            }
+        }).then((response)=>{
+            return response.json();
+        }).then((response)=>{
+            console.log(response);
+            if(response.statusCode === 401){
+                alert('Invalid Credentials, please try again...!')
+            }
+            else{
+                localStorage.setItem('user',JSON.stringify(response));
+                window.location = './index.html'
+            }
+            
+        }).catch((error)=>{
+            console.log(error);
+            alert('Please try again...!')
+            // throw error;
+        })
+
+    }
+    // document.querySelector('.login_form').addEventListener('submit',()=>{
+    //     alert('clicked')
+    // });
+</script>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        #home_main{
+            margin: 20px auto;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #home_animation{
+            width: 40%;
+            height: 600px;
+        }
+        #home_animation>img{
+            width: 100%;
+        }
+        #home_info{
+            width: 60%;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background-color: #33c0ca;
+
+        }
+        #home_info>h1{
+            text-align: center;
+            text-decoration: overline;
+            color: white;
+        }
+        #home_info>p{
+            text-align: center;
+            font-weight: 700;
+            color: white;
+        }
+        #navbar_main{
+            width: 100%;
+            height: 100px;
+            background-color: #33c0ca;
+            display: flex;
+            justify-content:space-around;
+            align-items: center;
+            
+        }
+        #navbar_name>h1{
+            color: white;
+        }
+        #navbar_btns>button{
+            width: 100px;
+            text-align: center;
+            height: 40px;
+            background-color: white;
+            border: none;
+            color: black;
+            border-radius: 4px;
+        }
+        #hotels_btn{
+            width: 30%;
+            height: 45px;
+            border: none;
+            border-radius: 4px;
+            background-color: white;
+            color: #33c0ca;
+            font-weight: 700;
+            text-align: center;
+            font-size: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="navbar_main">
+        <div id="navbar_name">
+            <h1>hotels360.com</h1>
+        </div>
+        <div id="navbar_btns">
+            
+        </div>
+    </div>
+    <div id="home_main">
+        <div id="home_animation">
+            <img src="https://cdn.dribbble.com/users/332742/screenshots/2423453/happy_holidays.gif" alt="holidays">
+        </div>
+        <div id="home_info">
+            <h1>Welcome to hotels360.com</h1>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Assumenda reprehenderit officiis sequi omnis obcaecati, aperiam accusantium eos ipsa eaque asperiores, nesciunt aliquam. Error tempore aut rerum quidem maiores nostrum optio?</p>
+            <button id="hotels_btn">Hotels</button>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    let user = JSON.parse(localStorage.getItem('user'));
+    let nav_btn_div = document.getElementById('navbar_btns');
+    if(!user){
+        let login_button = document.createElement('button');
+        login_button.setAttribute('id','loginbutton');
+        login_button.addEventListener('click',()=>{
+            window.location = './login.html'
+        })
+        login_button.textContent = "Login";
+        nav_btn_div.append(login_button);
+    }
+    else{
+        let logout_button = document.createElement('button');
+        logout_button.setAttribute('id','logout_btn');
+        logout_button.addEventListener('click',()=>{
+            localStorage.setItem('user',null);
+            location.reload();
+        })
+        logout_button.textContent = 'Logout';
+        nav_btn_div.append(logout_button)
+    }
+
+    let gotohotels=()=>{
+        let user = JSON.parse(localStorage.getItem('user'));
+        if(!user){
+            alert('Please login to browse hotels...!')
+        }
+        else{
+            window.location = './hotels.html'
+        }
+    }
+
+
+    document.getElementById('hotels_btn').addEventListener('click',gotohotels);
+</script>
